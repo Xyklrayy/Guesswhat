@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess What? - Ultimate 4D Gaming Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            --accent-color: #7f5af0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary-gradient);
+            min-height: 100vh;
+            scroll-behavior: smooth;
+            color: #ffffff;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        .gradient-text {
+            background: var(--secondary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .btn-primary {
+            background: var(--secondary-gradient);
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.4);
+        }
+
+        .btn-secondary {
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--secondary-gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+
+        .feature-icon {
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .stats-number {
+            font-variant-numeric: tabular-nums;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .accordion-input:checked ~ .accordion-content {
+            max-height: 1000px;
+        }
+
+        .accordion label i {
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-input:checked + label i {
+            transform: rotate(180deg);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--secondary-gradient);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -12px;
+            top: 0;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--secondary-gradient);
+        }
+
+        .testimonial-card {
+            transition: all 0.3s ease;
+        }
+
+        .glide__slide--active .testimonial-card {
+            transform: scale(1.05);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="text-white">
+    <!-- Navigation -->
+    <nav class="glass-effect fixed w-full top-0 z-50 px-6 py-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <img src="logo1.png" alt="Guess What? Logo" class="h-10 w-10 object-contain floating">
+                <span class="text-2xl font-bold">Guess What?</span>
+            </div>
+            
+            <div class="hidden lg:flex items-center space-x-8">
+                <a href="#home" class="nav-link font-medium">Home</a>
+                <a href="#features" class="nav-link font-medium">Features</a>
+                <a href="#how-to-play" class="nav-link font-medium">How to Play</a>
+                <a href="#tokenomics" class="nav-link font-medium">Tokenomics</a>
+                <a href="#roadmap" class="nav-link font-medium">Roadmap</a>
+                <a href="#community" class="nav-link font-medium">Community</a>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <button class="btn-primary px-6 py-3 rounded-full font-semibold focus:outline-none focus:ring-4 focus:ring-pink-400">
+                    Connect Wallet
+                </button>
+                <button id="mobile-menu-toggle" class="lg:hidden text-2xl focus:outline-none focus:ring-4 focus:ring-pink-400">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu fixed inset-0 bg-black bg-opacity-90 z-50 lg:hidden">
+        <div class="flex justify-end p-6">
+            <button id="mobile-menu-close" class="text-3xl text-pink-400">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="flex flex-col items-center justify-center h-full space-y-8">
+            <a href="#home" class="text-2xl font-semibold hover:text-pink-400 transition">Home</a>
+            <a href="#features" class="text-2xl font-semibold hover:text-pink-400 transition">Features</a>
+            <a href="#how-to-play" class="text-2xl font-semibold hover:text-pink-400 transition">How to Play</a>
+            <a href="#tokenomics" class="text-2xl font-semibold hover:text-pink-400 transition">Tokenomics</a>
+            <a href="#roadmap" class="text-2xl font-semibold hover:text-pink-400 transition">Roadmap</a>
+            <a href="#community" class="text-2xl font-semibold hover:text-pink-400 transition">Community</a>
+            <button class="btn-primary px-8 py-3 rounded-full font-semibold mt-8">
+                Connect Wallet
+            </button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="pt-32 pb-20 px-6">
+        <div class="container mx-auto text-center">
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black mb-6 gradient-text" data-aos="fade-up">
+                GUESS WHAT?
+            </h1>
+            <p class="text-xl md:text-2xl mb-10 opacity-90 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                Revolutionizing 4D gaming with blockchain technology, AI-powered passive income, 
+                and community-driven rewards. Experience the future of prediction games today!
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center" data-aos="fade-up" data-aos-delay="200">
+                <button class="btn-primary px-10 py-4 rounded-full font-bold text-lg">
+                    Start Playing Now
+                </button>
+                <button class="btn-secondary px-10 py-4 rounded-full font-bold text-lg">
+                    Watch Tutorial
+                </button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 max-w-6xl mx-auto" data-aos="fade-up" data-aos-delay="300">
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-bold gradient-text stats-number">25M+</div>
+                <p class="text-lg opacity-80">Points Distributed</p>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-bold gradient-text stats-number">50K+</div>
+                <p class="text-lg opacity-80">Active Players</p>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-bold gradient-text stats-number">$2.5M</div>
+                <p class="text-lg opacity-80">Prize Pool</p>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-bold gradient-text stats-number">99.9%</div>
+                <p class="text-lg opacity-80">Uptime</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 px-6 bg-white bg-opacity-5">
+        <div class="container mx-auto">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Why Choose Guess What?</h2>
+                <p class="text-xl opacity-90 max-w-3xl mx-auto">
+                    Discover the unique features that make our platform stand out from traditional gaming experiences
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="glass-card p-8 rounded-2xl feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon text-5xl gradient-text mb-6">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">AI Permaweb Agents</h3>
+                    <p class="opacity-90 mb-4">
+                        Earn 1-5% daily passive income from your staked points with our intelligent AI agents
+                    </p>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                            <span>2x daily usage per agent</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                            <span>No minimum stake required</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                            <span>Compound rewards automatically</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="glass-card p-8 rounded-2xl feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon text-5xl gradient-text mb-6">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Multi-Tier Rewards</h3>
+                    <p class="opacity-90 mb-4">
+                        Win big with our progressive reward system for 2D, 3D, and 4D predictions
+                    </p>
+                    <div class="grid grid-cols-3 gap-4 mt-6">
+                        <div class="text-center p-3 bg-white bg-opacity-10 rounded-lg">
+                            <div class="text-2xl font-bold gradient-text">1000x</div>
+                            <div class="text-sm">2D Wins</div>
+                        </div>
+                        <div class="text-center p-3 bg-white bg-opacity-10 rounded-lg">
+                            <div class="text-2xl font-bold gradient-text">10,000x</div>
+                            <div class="text-sm">3D Wins</div>
+                        </div>
+                        <div class="text-center p-3 bg-white bg-opacity-10 rounded-lg">
+                            <div class="text-2xl font-bold gradient-text">100,000x</div>
+                            <div class="text-sm">4D Wins</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="glass-card p-8 rounded-2xl feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon text-5xl gradient-text mb-6">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Secure & Transparent</h3>
+                    <p class="opacity-90 mb-4">
+                        Built on blockchain technology with provably fair algorithms and transparent transactions
+                    </p>
+                    <div class="flex items-center space-x-4 mt-6">
+                        <div class="flex items-center">
+                            <i class="fas fa-lock text-green-400 mr-2"></i>
+                            <span>SSL Encrypted</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-blue-400 mr-2"></i>
+                            <span>Provably Fair</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="glass-card p-8 rounded-2xl feature-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-icon text-5xl gradient-text mb-6">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Community Driven</h3>
+                    <p class="opacity-90 mb-4">
+                        Join a growing community of players and participate in governance decisions
+                    </p>
+                    <div class="mt-6">
+                        <div class="flex items-center mb-2">
+                            <div class="w-full bg-gray-700 rounded-full h-2">
+                                <div class="bg-green-400 h-2 rounded-full" style="width: 75%"></div>
+                            </div>
+                            <span class="ml-2 text-sm">75% Community Rewards</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="glass-card p-8 rounded-2xl feature-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-icon text-5xl gradient-text mb-6">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Mobile Optimized</h3>
+                    <p class="opacity-90 mb-4">
+                        Play anywhere, anytime with our fully responsive mobile-optimized platform
+                    </p>
+                    <div class="flex space-x-4 mt-6">
+                        <div class="text-center">
+                            <i class="fab fa-android text-3xl text-green-400"></i>
+                            <div class="text-sm mt-1">Android</div>
+                        </div>
+                        <div class="text-center">
+                            <i class="fab fa-apple text-3xl text-gray-300"></i>
+                            <div class="text-sm mt-1">iOS</div>
+                        </div>
+                        <div class="text-center">
+                            <i class="fas fa-desktop text-3xl text-blue-400"></i>
+                            <div class="text-sm mt-1">Web</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="glass-card p-8 rounded-2xl feature-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="feature-icon text-5xl gradient-text mb-6">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Bonus System</h3>
+                    <p class="opacity-90 mb-4">
+                        Enjoy daily bonuses, referral rewards, and special event promotions
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 mt-6">
+                        <div class="text-center p-3 bg-white bg-opacity-10 rounded-lg">
+                            <div class="text-lg font-bold gradient-text">+25</div>
+                            <div class="text-sm">Welcome Points</div>
+                        </div>
+                        <div class="text-center p-3 bg-white bg-opacity-10 rounded-lg">
+                            <div class="text-lg font-bold gradient-text">10%</div>
+                            <div class="text-sm">Referral Bonus</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Play Section -->
+    <section id="how-to-play" class="py-20 px-6">
+        <div class="container mx-auto">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">How to Play</h2>
+                <p class="text-xl opacity-90 max-w-3xl mx-auto">
+                    Easy steps to start playing and earning with Guess What?
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-white bg-opacity-10 flex items-center justify-center">
+                        <span class="text-3xl font-bold gradient-text">1</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Create Account</h3>
+                    <p class="opacity-90">Sign up and receive 25 free points to start playing</p>
+                </div>
+
+                <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-white bg-opacity-10 flex items-center justify-center">
+                        <span class="text-3xl font-bold gradient-text">2</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Make Predictions</h3>
+                    <p class="opacity-90">Choose from 25 columns for 2D, 3D, or 4D predictions</p>
+                </div>
+
+                <div class="text-center" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-white bg-opacity-10 flex items-center justify-center">
+                        <span class="text-3xl font-bold gradient-text">3</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Win Rewards</h3>
+                    <p class="opacity-90">Earn 1000x to 100,000x multipliers on correct predictions</p>
+                </div>
+
+                <div class="text-center" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-white bg-opacity-10 flex items-center justify-center">
+                        <span class="text-3xl font-bold gradient-text">4</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Invest & Grow</h3>
+                    <p class="opacity-90">Stake points with AI agents for passive income</p>
+                </div>
+            </div>
+
+            <div class="mt-16 text-center" data-aos="fade-up">
+                <div class="glass-card p-8 rounded-2xl max-w-4xl mx-auto">
+                    <h3 class="text-2xl font-bold mb-6">Prediction Types Explained</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="text-center p-6 bg-white bg-opacity-5 rounded-xl">
+                            <div class="text-3xl font-bold gradient-text mb-2">2D</div>
+                            <p class="mb-4">Last 2 digits match</p>
+                            <div class="text-2xl font-bold">1,000x</div>
+                            <div class="text-sm opacity-90">Multiplier</div>
+                        </div>
+                        <div class="text-center p-6 bg-white bg-opacity-5 rounded-xl">
+                            <div class="text-3xl font-bold gradient-text mb-2">3D</div>
+                            <p class="mb-4">Last 3 digits match</p>
+                            <div class="text-2xl font-bold">10,000x</div>
+                            <div class="text-sm opacity-90">Multiplier</div>
+                        </div>
+                        <div class="text-center p-6 bg-white bg-opacity-5 rounded-xl">
+                            <div class="text-3xl font-bold gradient-text mb-2">4D</div>
+                            <p class="mb-4">All 4 digits match</p>
+                            <div class="text-2xl font-bold">100,000x</div>
+                            <div class="text-sm opacity-90">Multiplier</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tokenomics Section -->
+    <section id="tokenomics" class="py-20 px-6 bg-white bg-opacity-5">
+        <div class="container mx-auto">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">$GWT Tokenomics</h2>
+                <p class="text-xl opacity-90 max-w-3xl mx-auto">
+                    The sustainable economic model behind our ecosystem
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+                <div class="glass-card p-8 rounded-2xl" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-2xl font-bold mb-6">Token Distribution</h3>
+                    <ul class="space-y-4 text-gray-300">
+                        <li><span class="font-semibold">40%</span> Community Rewards</li>
+                        <li><span class="font-semibold">25%</span> Ecosystem Growth</li>
+                        <li><span class="font-semibold">20%</span> Team & Advisors</li>
+                        <li><span class="font-semibold">15%</span> Liquidity Pool</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card p-8 rounded-2xl" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-2xl font-bold mb-6">Utility & Benefits</h3>
+                    <ul class="space-y-4 text-gray-300">
+                        <li>• In-game rewards and bonuses</li>
+                        <li>• Governance voting rights</li>
+                        <li>• Staking and passive income</li>
+                        <li>• Exclusive feature access</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="glass-card p-8 rounded-2xl max-w-3xl mx-auto text-center" data-aos="fade-up" data-aos-delay="300">
+                <h3 class="text-2xl font-bold mb-4">Point Conversion</h3>
+                <p class="text-lg mb-2">
+                    250 Points = 0.05 $SOL = 1 $AO = Airdrop for $GWT tokens
+                </p>
+                <p class="opacity-90">
+                    Every point you earn brings you closer to $GWT token rewards!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section id="roadmap" class="py-20 px-6">
+        <div class="container mx-auto max-w-5xl">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Roadmap</h2>
+                <p class="text-xl opacity-90 max-w-3xl mx-auto">
+                    Our journey and milestones to revolutionize the gaming industry
+                </p>
+            </div>
+
+            <div class="space-y-12">
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="100">
+                    <div class="timeline-dot"></div>
+                    <h3 class="text-2xl font-semibold mb-2">Q4 2025</h3>
+                    <ul class="list-disc list-inside text-gray-300">
+                        <li>Platform concept & design</li>
+                        <li>Smart contract development</li>
+                        <li>Initial token launch</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="200">
+                    <div class="timeline-dot"></div>
+                    <h3 class="text-2xl font-semibold mb-2">Q4 2025</h3>
+                    <ul class="list-disc list-inside text-gray-300">
+                        <li>Beta launch with 4D guessing game</li>
+                        <li>AI Permaweb agent integration</li>
+                        <li>Community building & marketing</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="300">
+                    <div class="timeline-dot"></div>
+                    <h3 class="text-2xl font-semibold mb-2">Q1 2026</h3>
+                    <ul class="list-disc list-inside text-gray-300">
+                        <li>Mobile app release</li>
+                        <li>Governance & staking features</li>
+                        <li>Partnerships & ecosystem expansion</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-right" data-aos-delay="400">
+                    <div class="timeline-dot"></div>
+                    <h3 class="text-2xl font-semibold mb-2">Q1 2026</h3>
+                    <ul class="list-disc list-inside text-gray-300">
+                        <li>Full platform launch</li>
+                        <li>Global marketing campaigns</li>
+                        <li>Continuous feature updates</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 px-6 bg-white bg-opacity-5">
+        <div class="container mx-auto max-w-5xl">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">What Our Players Say</h2>
+                <p class="text-xl opacity-90 max-w-3xl mx-auto">
+                    Hear from our community about their experience with Guess What?
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-card p-8 rounded-2xl text-center testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                    <p class="italic mb-6">"Guess What? changed how I play lottery games. The AI agents are amazing for passive income!"</p>
+                    <h4 class="font-bold">- Sarah K.</h4>
+                </div>
+
+                <div class="glass-card p-8 rounded-2xl text-center testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                    <p class="italic mb-6">"The community is so supportive and the rewards are real. Highly recommend!"</p>
+                    <h4 class="font-bold">- James L.</h4>
+                </div>
+
+                <div class="glass-card p-8 rounded-2xl text-center testimonial-card" data-aos="fade-up" data-aos-delay="300">
+                    <p class="italic mb-6">"I love the transparency and fairness of the platform. The tokenomics are well thought out."</p>
+                    <h4 class="font-bold">- Priya M.</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 px-6">
+        <div class="container mx-auto max-w-4xl">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Frequently Asked Questions</h2>
+                <p class="text-xl opacity-90 max-w-3xl mx-auto">
+                    Answers to common questions about Guess What?
+                </p>
+            </div>
+
+            <div class="space-y-6">
+                <div class="accordion glass-card rounded-2xl p-6" data-aos="fade-up" data-aos-delay="100">
+                    <input type="checkbox" id="faq1" class="accordion-input hidden" />
+                    <label for="faq1" class="flex justify-between items-center cursor-pointer">
+                        <span class="font-semibold">How do I start playing?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </label>
+                    <div class="accordion-content mt-4 text-gray-300">
+                        Create an account, receive free points, and start making your 2D, 3D, or 4D predictions!
+                    </div>
+                </div>
+
+                <div class="accordion glass-card rounded-2xl p-6" data-aos="fade-up" data-aos-delay="200">
+                    <input type="checkbox" id="faq2" class="accordion-input hidden" />
+                    <label for="faq2" class="flex justify-between items-center cursor-pointer">
+                        <span class="font-semibold">What is the AI Permaweb agent?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </label>
+                    <div class="accordion-content mt-4 text-gray-300">
+                        It's an AI-powered agent that stakes your points and generates passive income daily.
+                    </div>
+                </div>
+
+                <div class="accordion glass-card rounded-2xl p-6" data-aos="fade-up" data-aos-delay="300">
+                    <input type="checkbox" id="faq3" class="accordion-input hidden" />
+                    <label for="faq3" class="flex justify-between items-center cursor-pointer">
+                        <span class="font-semibold">How can I earn $GWT tokens?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </label>
+                    <div class="accordion-content mt-4 text-gray-300">
+                        Earn points by playing, then convert points to $GWT tokens via airdrops and staking rewards.
+                    </div>
+                </div>
+
+                <div class="accordion glass-card rounded-2xl p-6" data-aos="fade-up" data-aos-delay="400">
+                    <input type="checkbox" id="faq4" class="accordion-input hidden" />
+                    <label for="faq4" class="flex justify-between items-center cursor-pointer">
+                        <span class="font-semibold">Is my data safe?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </label>
+                    <div class="accordion-content mt-4 text-gray-300">
+                        Yes! We use blockchain technology and encryption to ensure your data and funds are secure.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section id="newsletter" class="py-20 px-6 bg-pink-700 bg-opacity-90">
+        <div class="container mx-auto max-w-3xl text-center" data-aos="fade-up">
+            <h2 class="text-4xl font-bold mb-6">Stay Updated</h2>
+            <p class="mb-8 opacity-90">
+                Subscribe to our newsletter to get the latest news, updates, and exclusive offers.
+            </p>
+            <form class="flex flex-col sm:flex-row gap-4 justify-center">
+                <input type="email" placeholder="Enter your email" required class="rounded-full px-6 py-3 flex-grow focus:outline-none text-gray-800">
+                <button type="submit" class="btn-primary rounded-full px-8 py-3 font-semibold">
+                    Subscribe
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section id="community" class="py-20 px-6 bg-white bg-opacity-5">
+        <div class="container mx-auto">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Join Our Community</h2>
+                <p class="text-xl opacity-90 max-w-3xl mx-auto">
+                    Connect with thousands of players and be part of the revolution
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10" data-aos="fade-up" data-aos-delay="100">
+                <a href="https://x.com/guesswhatfun" target="_blank" class="glass-card p-8 rounded-2xl text-center hover:shadow-xl transition flex flex-col items-center space-y-4">
+                    <div class="text-blue-400 text-6xl">
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold">Twitter</h3>
+                    <p class="opacity-90">Latest updates and announcements</p>
+                </a>
+
+                <a href="#" class="glass-card p-8 rounded-2xl text-center hover:shadow-xl transition flex flex-col items-center space-y-4">
+                    <div class="text-purple-600 text-6xl">
+                        <i class="fab fa-discord"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold">Discord</h3>
+                    <p class="opacity-90">Live community discussions</p>
+                </a>
+
+                <a href="#" class="glass-card p-8 rounded-2xl text-center hover:shadow-xl transition flex flex-col items-center space-y-4">
+                    <div class="text-red-500 text-6xl">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold">YouTube</h3>
+                    <p class="opacity-90">Tutorials and gameplay</p>
+                </a>
+
+                <a href="#" class="glass-card p-8 rounded-2xl text-center hover:shadow-xl transition flex flex-col items-center space-y-4">
+                    <div class="text-blue-600 text-6xl">
+                        <i class="fab fa-telegram"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold">Telegram</h3>
+                    <p class="opacity-90">Quick updates and support</p>
+                </a>
+            </div>
+
+            <div class="mt-16 text-center" data-aos="fade-up" data-aos-delay="200">
+                <a href="https://x.com/guesswhatfun" target="_blank" class="inline-flex items-center space-x-3 px-8 py-4 rounded-full bg-black text-white font-semibold shadow-lg hover:bg-gray-800 transition">
+                    <i class="fab fa-x-twitter text-xl"></i>
+                    <span>Follow @guesswhatfun</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12 px-6">
+        <div class="container mx-auto grid md:grid-cols-4 gap-10">
+            <div>
+                <div class="flex items-center space-x-3 mb-4">
+                    <img src="logo1.png" alt="Guess What? Logo" class="h-10">
+                    <span class="text-white text-2xl font-bold">Guess What?</span>
+                </div>
+                <p>
+                    The future of prediction gaming with blockchain technology and AI-powered rewards.
+                </p>
+            </div>
+
+            <div>
+                <h4 class="text-lg font-semibold mb-4 text-white">Quick Links</h4>
+                <ul class="space-y-2">
+                    <li><a href="#home" class="hover:text-white transition">Home</a></li>
+                    <li><a href="#features" class="hover:text-white transition">Features</a></li>
+                    <li><a href="#how-to-play" class="hover:text-white transition">How to Play</a></li>
+                    <li><a href="#tokenomics" class="hover:text-white transition">Tokenomics</a></li>
+                    <li><a href="#roadmap" class="hover:text-white transition">Roadmap</a></li>
+                    <li><a href="#community" class="hover:text-white transition">Community</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-lg font-semibold mb-4 text-white">Resources</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-white transition">Whitepaper</a></li>
+                    <li><a href="#" class="hover:text-white transition">Tutorials</a></li>
+                    <li><a href="#" class="hover:text-white transition">FAQ</a></li>
+                    <li><a href="#" class="hover:text-white transition">Support</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-lg font-semibold mb-4 text-white">Legal</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-white transition">Terms of Service</a></li>
+                    <li><a href="#" class="hover:text-white transition">Disclaimer</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+            <p>© 2024 Guess What?. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS animations
+        AOS.init({
+            duration: 800,
+            once: true,
+            easing: 'ease-in-out'
+        });
+
+        // Mobile menu functionality
+        const menuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuClose = document.getElementById('mobile-menu-close');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+        });
+
+        menuClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+        });
+
+        // Close mobile menu when clicking on links
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+            });
+        });
+
+        // Accordion functionality
+        document.querySelectorAll('.accordion label').forEach(label => {
+            label.addEventListener('click', () => {
+                const icon = label.querySelector('i');
+                if (icon) {
+                    icon.classList.toggle('rotate-180');
+                }
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
